@@ -108,11 +108,5 @@ func nationalize(name string) {
 		return
 	}
 
-	fmt.Printf("Национальность для %s:\n", result.Name)
-	for i, country := range result.Country {
-		fmt.Printf("%d. Страна: %s, Вероятность: %.2f%%\n",
-			i+1,
-			country.CountryID,
-			country.Probability*100)
-	}
+	fmt.Println("Страна: ", result.Country[0].CountryID)
 }
