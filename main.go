@@ -37,11 +37,13 @@ func main() {
 		fmt.Println("\nВведите имя:")
 		fmt.Scan(&name)
 		age := agify(name)
-		gender := genderize(name)
-		nation := nationalize(name)
-		addingDb(name, age, gender, nation)
-	}
 
+		if age != 0 {
+			gender := genderize(name)
+			nation := nationalize(name)
+			addingDb(name, age, gender, nation)
+		}
+	}
 }
 
 func agify(name string) int {
@@ -65,6 +67,10 @@ func agify(name string) int {
 		return 0
 	}
 
+	if result.Age == 0 {
+		fmt.Println("Данных об этом имени недостаточно")
+		return 0
+	}
 	fmt.Printf("Имя: %s\nВозраст: %d\n", result.Name, result.Age)
 
 	return result.Age
