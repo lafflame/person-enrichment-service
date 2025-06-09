@@ -31,6 +31,14 @@ type Country struct {
 	Probability float64 `json:"probability"`
 }
 
+const (
+	DBHost     = "localhost"
+	DBPort     = 5432
+	DBUser     = "postgres"
+	DBPassword = ""
+	DBName     = "users"
+)
+
 func main() {
 	var name string
 	for {
@@ -44,6 +52,23 @@ func main() {
 			addingDb(name, age, gender, nation)
 		}
 	}
+}
+
+func addingDb(name string, age int, gender string, nation string) {
+	connect := fmt.Sprintf("host=%s port=%d user=%s dbname=%s sslmode=disable",
+		DBHost, DBPort, DBUser, DBName)
+	db, err := sql.Open("postgres", connect)
+
+	if err != nil {
+		panic(err)
+	}
+	defer db.Close()
+
+	add, err := db.Exec("insert into users (name, age, gender, nation) values ($1, $2, $3, $4)", name, age, gender, nation)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(add.RowsAffected())
 }
 
 func agify(name string) int {
@@ -126,20 +151,4 @@ func nationalize(name string) string {
 	fmt.Printf("Национальность: %s \n", result.Country[0].CountryID)
 
 	return result.Country[0].CountryID
-}
-
-func addingDb(name string, age int, gender string, nation string) {
-	connect := "host=localhost port=5432 user=postgres dbname=users sslmode=disable"
-	db, err := sql.Open("postgres", connect)
-
-	if err != nil {
-		panic(err)
-	}
-	defer db.Close()
-
-	add, err := db.Exec("insert into users (name, age, gender, nation) values ($1, $2, $3, $4)", name, age, gender, nation)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(add.RowsAffected())
 }
