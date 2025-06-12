@@ -20,8 +20,8 @@
 
 1. Клонируйте репозиторий:
    ```bash
-   git clone https://github.com/yourusername/name-analysis.git
-   cd name-analysis
+   git clone https://github.com/lafflame/person-enrichment-service.git
+   cd person-enrichment-service
    ```
 
 2. Установите зависимости:
